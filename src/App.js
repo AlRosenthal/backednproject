@@ -89,17 +89,14 @@ class App extends Component {
     const director = event.target.director.value;
     const genre = event.target.genre.value;
     fetch(`${this.API_URL}/movies`, {
-      method: 'post',
-      body: JSON.stringify({
-        title: title,
-        year: year,
-        director: director,
-        genre: genre
-      })
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({title: title,year: year,director: director,genre: genre})
     }).then(res => res.json()).then(results => {
       const moviesCopy = this.state.movies;
-
-      moviesCopy.push(results);
+      moviesCopy.push(results[0]);
       this.setState({
         movies: moviesCopy
       });
@@ -144,6 +141,9 @@ class App extends Component {
     const genre = event.target.genre.value;
     fetch(`${this.API_URL}/movies`, {
       method: 'PUT',
+      headers: {
+        "Content-Type": "application/json;",
+      },
       body: JSON.stringify({
         id: this.state.edit.id,
         title: title,
